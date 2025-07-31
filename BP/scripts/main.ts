@@ -1,5 +1,3 @@
-console.warn("main.ts loaded")
-
 import { world, system, Vector3, Player } from "@minecraft/server";
 
 import { teleporters, TeleportArea } from "./teleporters";
