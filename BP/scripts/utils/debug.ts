@@ -2,16 +2,21 @@ import { world, Vector3 } from "@minecraft/server"
 
 export function debugPlayers() {
     for (const player of world.getAllPlayers()) {
-        let velocity: Vector3 = player.getVelocity()
-        let speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2)
+        const velocity: Vector3 = player.getVelocity()
+        const speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2);
 
         if (player.hasTag("debug")) {
+            const message = JSON.stringify({
+                "rawtext": [
+                    { "text": `> §bspeed: §f${speed.toFixed(3)}` },
+                    { "text": `\n> §btags: §f${player.getTags()}` }
+                ]
+            });
             try {
-                player.runCommand(`title @s actionbar ` +
-                    `speed: ${Math.floor(speed * 1000)}` +
-                    `\nname: ${player.name}`);
+                player.runCommand(`titleraw @s actionbar ${message}`);
+
             } catch (error) {
-                console.warn(`[ERRO] failed on running the cmd: ${error}`)
+                console.warn(`[ERRO] failed on running the cmd: ${error}`);
             }
 
         };
