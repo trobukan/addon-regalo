@@ -1,34 +1,30 @@
-import { world, system, Vector3, Player } from "@minecraft/server";
+import { world, system } from "@minecraft/server";
+import { checkTeleports } from "./teleporters";
 
-import { teleporters, TeleportArea } from "./teleporters";
-import * as utils from "./utils/areaCheck";
 import { debugPlayers } from "./utils/debug"
+import * as playerData from "./playerData"
 
-function checkTeleports(): void {
-    for (const player of world.getPlayers()) {
-        let velocity: Vector3 = player.getVelocity()
-        let speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2)
 
-        for (const tp of teleporters) {
-            const isMovingEnough: boolean = speed > tp.minVelocity;
-            const isInArea: boolean = utils.isPlayerInArea(player.location, tp.areaStart, tp.areaEnd);
+world.afterEvents.playerSpawn.subscribe((event) => {
+    if (!event.initialSpawn) return;
+    playerData.init(event.player)
 
-            if (isInArea && isMovingEnough) {
-                try {
-                    player.teleport(tp.end);
-                } catch (error) {
-                    console.warn(`[ERRO] failed on running the cmd: ${error}`)
-                };
-
-            };
-        };
-    };
-};
+})
 
 system.runInterval(() => {
     checkTeleports();
     debugPlayers();
 }, 1);
 
+
+// data:reset
+// data:remove
+// data:set
+// data:getAll
+// quest:reward
+// quest:next
+system.afterEvents.scriptEventReceive.subscribe((event) => {
+    console.warn(event.id, event.initiator.nameTag, event.message)
+})
 
 
