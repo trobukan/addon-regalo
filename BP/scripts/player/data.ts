@@ -1,18 +1,18 @@
 import { Player } from "@minecraft/server"
 
 type playerDataDefaults = {
-    "quest:progress": number,
+    "story:progress": number,
     "player:initialized": boolean,
 };
 
 const defaultData: playerDataDefaults = {
-    "quest:progress": 0,
+    "story:progress": 0,
     "player:initialized": true,
 };
 
-export function init(player: Player): void {
-    const initialized = player.getDynamicProperty("player:initialized")
-    if (initialized) return;
+export function init(player: Player, force?: boolean): void {
+    const initialized = player.getDynamicProperty("player:initialized");
+    if (initialized && !force) return;
 
     player.setDynamicProperties(defaultData);
 };

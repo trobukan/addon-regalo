@@ -11,7 +11,7 @@ export function debugPlayers() {
                 "rawtext": [
                     { "text": `> §bspeed: §f${speed.toFixed(3)}` },
                     { "text": `\n> §btags: §f${player.getTags()}` },
-                    { "text": `\n> §bquest: §f${player.getDynamicProperty("quest:progress")}` }
+                    { "text": `\n> §b${"story:progress"}: §f${player.getDynamicProperty("story:progress")}` }
                 ]
             });
             try {
