@@ -1,13 +1,13 @@
-import { world, system } from "@minecraft/server";
-import { checkTeleports } from "./teleporters";
+import { world, system, Player } from "@minecraft/server";
 
-import { debugPlayers } from "./utils/debug"
-import * as playerData from "./playerData"
-
+import * as playerData from "./player/data";
+import { checkTeleports } from "./system/teleporters";
+import { debugPlayers } from "./utils/debug";
+import { eventHandlers } from "./handlers/core/index";
 
 world.afterEvents.playerSpawn.subscribe((event) => {
     if (!event.initialSpawn) return;
-    playerData.init(event.player)
+    playerData.init(event.player);
 
 })
 
@@ -16,15 +16,28 @@ system.runInterval(() => {
     debugPlayers();
 }, 1);
 
-
 // data:reset
 // data:remove
 // data:set
 // data:getAll
-// quest:reward
-// quest:next
 system.afterEvents.scriptEventReceive.subscribe((event) => {
-    console.warn(event.id, event.initiator.nameTag, event.message)
-})
+    const id = event.sourceEntity.id;
+    const player = world.getPlayers().find(player => player.id === id)
+    const message = event.message;
+    const handler = eventHandlers[event.id];
 
+    if (!player) {
+        console.warn(`No player found with id: ${id}`)
+    };
+
+    if (!handler) {
+        console.warn(`Unknown ID:${event.id}`)
+    };
+
+    try {
+        handler(player, message);
+    } catch (err) {
+        console.error(`Error handling "${event.id}":`, err);
+    };
+})
 

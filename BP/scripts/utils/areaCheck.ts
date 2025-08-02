@@ -1,4 +1,4 @@
-import { Vector3 } from "@minecraft/server";
+	import { Vector3 } from "@minecraft/server";
 
 export function isPlayerInArea(location: Vector3, start: Vector3, end: Vector3): boolean {
     const roundedLoc = {
@@ -15,4 +15,4 @@ export function isPlayerInArea(location: Vector3, start: Vector3, end: Vector3):
         roundedLoc.z >= Math.min(start.z, end.z) &&
         roundedLoc.z <= Math.max(start.z, end.z)
     );
-}
+};

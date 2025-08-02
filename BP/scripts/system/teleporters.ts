@@ -1,5 +1,5 @@
-import { world, Vector3 } from "@minecraft/server";
-import * as utils from "./utils/areaCheck";
+		import { world, Vector3 } from "@minecraft/server";
+import * as utils from "../utils/areaCheck";
 
 type TeleportArea = {
     name: string;
@@ -21,8 +21,8 @@ const teleporters: TeleportArea[] = [
 
 export function checkTeleports(): void {
     for (const player of world.getPlayers()) {
-        let velocity: Vector3 = player.getVelocity()
-        let speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2)
+        let velocity: Vector3 = player.getVelocity();
+        let speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2);
 
         for (const tp of teleporters) {
             const isMovingEnough: boolean = speed > tp.minVelocity;
@@ -32,7 +32,7 @@ export function checkTeleports(): void {
                 try {
                     player.teleport(tp.end);
                 } catch (error) {
-                    console.warn(`[ERRO] failed on running the cmd: ${error}`)
+                    console.warn(`[ERRO] failed on running the cmd: ${error}`);
                 };
 
             };

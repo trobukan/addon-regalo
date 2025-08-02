@@ -1,8 +1,8 @@
-import { world, Vector3 } from "@minecraft/server"
+import { world, Vector3 } from "@minecraft/server";
 
 export function debugPlayers() {
     for (const player of world.getAllPlayers()) {
-        const velocity: Vector3 = player.getVelocity()
+        const velocity: Vector3 = player.getVelocity();
         const speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2);
 
         if (player.hasTag("debug")) {
@@ -19,7 +19,7 @@ export function debugPlayers() {
 
             } catch (error) {
                 console.warn(`[ERROR] failed on running the cmd: ${error}`);
-            }
+            };
 
         };
     };
