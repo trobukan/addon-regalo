@@ -16,10 +16,7 @@ system.runInterval(() => {
     debugPlayers();
 }, 1);
 
-// data:reset
-// data:remove
-// data:set
-// data:getAll
+
 system.afterEvents.scriptEventReceive.subscribe((event) => {
     const id = event.sourceEntity.id;
     const player = world.getPlayers().find(player => player.id === id)

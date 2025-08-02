@@ -1,8 +1,15 @@
-import { Player } from "@minecraft/server";
+	import { Player } from "@minecraft/server";
+import { EventHandler } from "./core/handlerTypes"
 
-export const dataHandlers: Record<string, (player: Player, message: string) => void> = {
+export const dataHandlers: EventHandler = {
     "data:get": (player, message) => {
         player.sendMessage(`§b${message}: §f${player.getDynamicProperty(message)}`)
+    },
+    "data:getAll": (player, message) => {
+        player.getDynamicPropertyIds().forEach((id) => {
+            const value = player.getDynamicProperty(id);
+            player.sendMessage(`§b${id}: §f${value}`)
+        })
     },
     "data:remove": (player, message) => {
         player.setDynamicProperty(message)
@@ -15,11 +22,5 @@ export const dataHandlers: Record<string, (player: Player, message: string) => v
         const arg = message.split(" ")
         player.setDynamicProperty(arg[0], arg[1])
     },
-    "data:getAll": (player, message) => {
-        player.getDynamicPropertyIds().forEach((id) => {
-            const value = player.getDynamicProperty(id);
-            player.sendMessage(`§b${id}: §f${value}`)
-        })
 
-    }
 };
