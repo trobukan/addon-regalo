@@ -2,12 +2,12 @@ import { Player } from "@minecraft/server"
 
 type playerDataDefaults = {
     "quest:progress": number,
-    "player:initialized": boolean
+    "player:initialized": boolean,
 };
 
 const defaultData: playerDataDefaults = {
     "quest:progress": 0,
-    "player:initialized": true
+    "player:initialized": true,
 };
 
 export function init(player: Player): void {

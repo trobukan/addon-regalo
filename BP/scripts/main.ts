@@ -27,10 +27,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
         console.warn(`No player found with id: ${id}`)
     };
 
-    if (!handler) {
-        console.warn(`Unknown ID:${event.id}`)
-    };
-
     try {
         handler(player, message);
     } catch (err) {
