@@ -1,9 +1,10 @@
 import { world, system, Player } from "@minecraft/server";
-
 import * as playerData from "./player/data";
 import { checkTeleports } from "./system/teleporters";
 import { debugPlayers } from "./utils/debug";
 import { eventHandlers } from "./handlers/core/index";
+
+
 
 world.afterEvents.playerSpawn.subscribe((event) => {
     if (!event.initialSpawn) return;
@@ -16,7 +17,6 @@ system.runInterval(() => {
     debugPlayers();
 }, 1);
 
-
 system.afterEvents.scriptEventReceive.subscribe((event) => {
     const id = event.sourceEntity.id;
     const player = world.getPlayers().find(player => player.id === id)
@@ -24,7 +24,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
     const handler = eventHandlers[event.id];
 
     if (!player) {
-        console.warn(`No player found with id: ${id}`)
+        console.warn(`No player found with id: ${id}`);
     };
 
     try {

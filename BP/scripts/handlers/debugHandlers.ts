@@ -1,7 +1,7 @@
-import { Player } from "@minecraft/server"
+import { world, Player } from "@minecraft/server"
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui"
-import { dataHandlers } from "./dataHandlers"
 import { EventHandler } from "./core/handlerTypes"
+import { dataHandlers } from "./dataHandlers"
 
 export const debugHandlers: EventHandler = {
     "debug:menu": (player, message) => {
@@ -78,3 +78,14 @@ function inputRemove(player: Player): void {
         if (prop) dataHandlers["data:remove"](player, prop);
     });
 }
+
+world.afterEvents.itemUse.subscribe((event) => {
+    const player = event.source;
+    const item = event.itemStack;
+
+    if (!player || item.typeId !== "debug:stick") return;
+
+    const handler = debugHandlers["debug:menu"];
+    if (handler) handler(player, "");
+})
+

@@ -28,6 +28,10 @@
 			0
 		]
 	},
+	"capabilities": [
+		"script_eval",
+		"experimental_custom_ui"
+	],
 	"modules": [
 		{
 			"type": "data",

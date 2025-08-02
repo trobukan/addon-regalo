@@ -14,6 +14,6 @@ export function init(player: Player): void {
     const initialized = player.getDynamicProperty("player:initialized")
     if (initialized) return;
 
-    player.setDynamicProperties(defaultData)
+    player.setDynamicProperties(defaultData);
 };
 
