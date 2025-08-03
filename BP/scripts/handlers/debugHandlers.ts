@@ -42,7 +42,10 @@ function openDataMenu(player: Player): void {
                 inputClean(player);
                 break;
         }
-    });
+    }).catch((err: Error) => {
+        console.error(`Failed to show form: ${err}`);
+        return;
+    })
 }
 
 function inputInit(player: Player): void {
@@ -65,7 +68,10 @@ function inputInit(player: Player): void {
         };
 
         dataHandlers["data:init"](player, "", targetPlayer);
-    })
+    }).catch((err: Error) => {
+        console.error(`Failed to show form: ${err}`);
+        return;
+    });
 }
 
 function inputGet(player: Player): void {
@@ -94,6 +100,9 @@ function inputGet(player: Player): void {
         } else {
             player.sendMessage("§cValue field is missing .");
         }
+    }).catch((err: Error) => {
+        console.error(`Failed to show form: ${err}`);
+        return;
     });
 };
 
@@ -117,6 +126,9 @@ function inputGetAll(player: Player): void {
         };
 
         dataHandlers["data:getAll"](player, "", targetPlayer);
+    }).catch((err: Error) => {
+        console.error(`Failed to show form: ${err}`);
+        return;
     });
 };
 
@@ -148,8 +160,11 @@ function inputSet(player: Player): void {
         } else {
             player.sendMessage("§cEither key or value field is missing.");
         }
+    }).catch((err: Error) => {
+        console.error(`Failed to show form: ${err}`);
+        return;
     });
-}
+};
 
 function inputRemove(player: Player): void {
     const { players, playerNames, defaultIndex } = getPlayerDropdownData(player);
@@ -177,8 +192,11 @@ function inputRemove(player: Player): void {
         } else {
             player.sendMessage("§cValue field is missing");
         }
+    }).catch((err: Error) => {
+        console.error(`Failed to show form: ${err}`);
+        return;
     });
-}
+};
 
 function inputClean(player: Player): void {
     const { players, playerNames, defaultIndex } = getPlayerDropdownData(player);
@@ -200,15 +218,18 @@ function inputClean(player: Player): void {
         };
 
         dataHandlers["data:clean"](player, "", targetPlayer);
-    })
-}
+    }).catch((err: Error) => {
+        console.error(`Failed to show form: ${err}`);
+        return;
+    });
+};
 
 function getPlayerDropdownData(current: Player) {
     const players = world.getPlayers();
     const playerNames = players.map(p => p.name);
     const defaultIndex = playerNames.indexOf(current.name);
     return { players, playerNames, defaultIndex };
-}
+};
 
 
 world.afterEvents.itemUse.subscribe((event) => {
@@ -219,4 +240,4 @@ world.afterEvents.itemUse.subscribe((event) => {
 
     const handler = debugHandlers["debug:menu"];
     if (handler) handler(player);
-})
+});

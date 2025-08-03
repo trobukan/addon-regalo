@@ -1,4 +1,3 @@
-import { Player } from "@minecraft/server";
 import { EventHandler } from "./core/handlerTypes"
 import * as data from "../player/data"
 

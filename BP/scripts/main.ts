@@ -1,15 +1,12 @@
 import { world, system, Player } from "@minecraft/server";
 import * as playerData from "./player/data";
-import { checkTeleports } from "./system/teleporters";
+import { checkTeleports } from "./world/teleporters";
 import { debugPlayers } from "./utils/debug";
 import { eventHandlers } from "./handlers/core/index";
-
-
 
 world.afterEvents.playerSpawn.subscribe((event) => {
     if (!event.initialSpawn) return;
     playerData.init(event.player);
-
 })
 
 system.runInterval(() => {
