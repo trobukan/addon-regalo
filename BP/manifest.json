@@ -29,8 +29,7 @@
 		]
 	},
 	"capabilities": [
-		"script_eval",
-		"experimental_custom_ui"
+		"script_eval"
 	],
 	"modules": [
 		{

@@ -1,7 +1,7 @@
-import { world, Player } from "@minecraft/server"
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui"
-import { EventHandler } from "./core/handlerTypes"
-import { dataHandlers } from "./dataHandlers"
+	import { world, Player } from "@minecraft/server";
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { EventHandler } from "./core/handlerTypes";
+import { dataHandlers } from "./dataHandlers";
 
 export const debugHandlers: EventHandler = {
     "debug:menu": (player, message) => {

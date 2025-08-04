@@ -1,14 +1,7 @@
 import { system, world, Vector3, Vector2 } from "@minecraft/server";
-import * as utils from "../utils/areaCheck";
-
-type TeleportArea = {
-    name: string;
-    areaStart: Vector3;
-    areaEnd: Vector3;
-    end: Vector3;
-    minVelocity: number;
-    rotation: Vector2,
-};
+import { SOUNDS } from "../vanilla/sounds"
+import { EFFECTS } from "../vanilla/effects"
+import * as utils from "../utils/player";
 
 const debounceMap = new Map<string, boolean>();
 
@@ -20,22 +13,36 @@ function setDebounce(playerId: string, value: boolean) {
     debounceMap.set(playerId, value);
 }
 
-const teleporters: TeleportArea[] = [
+const teleporters = [
     {
         name: "passage_to_934",
         areaStart: { x: 8, y: -58, z: -46 },
         areaEnd: { x: 9, y: -56, z: -45 },
-        end: { x: -139.5, y: -58, z: -55 },
+        end: { x: -59.5, y: -58, z: -45 },
         minVelocity: 0.26,
-        rotation: { x: 0, y: 90 }
+        rotation: { x: 0, y: 90 },
+
+        addEffect: (player) => {
+            const duration = 30;
+            player.addEffect(EFFECTS.BLINDNESS, duration, {
+                showParticles: false
+            })
+        }
     },
     {
         name: "passage_to_10",
-        areaStart: { x: -140, y: -58, z: -56 },
-        areaEnd: { x: -140, y: -56, z: -55 },
+        areaStart: { x: -60, y: -58, z: -46 },
+        areaEnd: { x: -60, y: -56, z: -45 },
         end: { x: 8.5, y: -58, z: -45 },
         minVelocity: 0.26,
-        rotation: { x: 0, y: 90 }
+        rotation: { x: 0, y: 90 },
+
+        addEffect: (player) => {
+            const duration = 30;
+            player.addEffect(EFFECTS.BLINDNESS, duration, {
+                showParticles: false
+            });
+        }
     }
 ];
 
@@ -51,6 +58,8 @@ export function checkTeleports(): void {
             if (isInArea && isMovingEnough && canTeleport(player.id)) {
                 setDebounce(player.id, true);
 
+                tp.addEffect(player)
+
                 player.teleport(
                     tp.end, {
                     rotation: tp.rotation,
@@ -59,7 +68,7 @@ export function checkTeleports(): void {
                 });
                 system.runTimeout(() => {
                     world.getDimension("overworld").playSound(
-                        "random.orb",
+                        SOUNDS.RANDOM_ORB,
                         player.location,
                         {
                             volume: 1,

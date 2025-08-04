@@ -1,4 +1,4 @@
-import { Player } from "@minecraft/server"
+import { Player } from "@minecraft/server";
 
 type playerDataDefaults = {
     "story:progress": number,

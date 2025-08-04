@@ -3,6 +3,7 @@ import * as playerData from "./player/data";
 import { checkTeleports } from "./world/teleporters";
 import { debugPlayers } from "./utils/debug";
 import { eventHandlers } from "./handlers/core/index";
+import { spawnTrainSmoking } from "./world/particles";
 
 world.afterEvents.playerSpawn.subscribe((event) => {
     if (!event.initialSpawn) return;
@@ -13,6 +14,10 @@ system.runInterval(() => {
     checkTeleports();
     debugPlayers();
 }, 1);
+
+system.runInterval(() => {
+    spawnTrainSmoking({ x: -61.5, y: -52, z: -57.5 })
+}, 5);
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
     const id = event.sourceEntity.id;

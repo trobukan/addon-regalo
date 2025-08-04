@@ -1,4 +1,4 @@
-import { Vector3 } from "@minecraft/server";
+import { world, Vector3 } from "@minecraft/server";
 
 export function isPlayerInArea(location: Vector3, start: Vector3, end: Vector3): boolean {
     const roundedLoc = {
@@ -16,3 +16,14 @@ export function isPlayerInArea(location: Vector3, start: Vector3, end: Vector3):
         roundedLoc.z <= Math.max(start.z, end.z)
     );
 };
+
+
+export function isPlayerNearby(position: Vector3, radius = 128): boolean {
+    for (const player of world.getPlayers()) {
+        const dx = player.location.x - position.x;
+        const dy = player.location.y - position.y;
+        const dz = player.location.z - position.z;
+        if (dx * dx + dy * dy + dz * dz <= radius * radius) return true;
+    }
+    return false;
+}
